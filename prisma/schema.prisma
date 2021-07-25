@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  password    String
+  avatar      String?
+  sessions    Session[]
+  focuses     Focus[]
+  spots       Spot[]
+}
+
+model Focus {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  name        String
+  completed   Boolean
+  sessions    Session[]
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      Int?
+}
+
+model Spot {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  name        String
+  latitude    Float
+  longitude   Float
+  sessions    Session[]
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      Int?
+}
+
+model Session {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  memo        String
+  rating      Int
+  spot        Spot? @relation(fields: [spotId], references: [id])
+  spotId      Int?
+  focus       Focus?  @relation(fields: [focusId], references: [id])
+  focusId     Int?
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      Int?
+}
