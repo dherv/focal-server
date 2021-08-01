@@ -16,7 +16,7 @@ export const spots = async (parent: any, args: any, context: any) => {
   });
 };
 
-export const user = () => async (parent: any, args: any, context: any) => {
+export const user = async (parent: any, args: any, context: any) => {
   const { userId } = context;
-  return await context.prisma.user.findUnique({ where: { id: userId } });
+  return context.prisma.user.findUnique({ where: { id: Number(userId) } });
 };

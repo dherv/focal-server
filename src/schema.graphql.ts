@@ -51,8 +51,9 @@ type User {
   id: ID!
   name: String!
   email: String!
-  sessions: [Session]!
-  focuses: [Focus]!
-  spots: [Spot]!
+  avatar: String
+  sessions: [Session]
+  focuses: [Focus]
+  spots: [Spot]
 }
 `;
