@@ -13,7 +13,7 @@ export const signup = async (
 ) => {
   const password = await bcrypt.hash(args.password, 10);
   const user = await context.prisma.user.create({
-    data: { ...args, avatar: faker.image.imageUrl(), password },
+    data: { ...args, avatar: faker.image.dataUri(), password },
   });
   const token = jwt.sign({ userId: user.id }, APP_SECRET);
   return {
@@ -57,6 +57,7 @@ export const addFocus: GraphQLFieldResolver<IFocus, any, any> = async (
   info
 ) => {
   const { userId } = context;
+  console.log({ userId });
   return await context.prisma.focus.create({
     data: {
       name: args.name,
